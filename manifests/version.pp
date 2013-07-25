@@ -26,7 +26,7 @@ define ruby::version(
     }
   }
 
-  $dest = "${ruby::rbenv_root}/versions/${version}"
+  $dest = "${ruby::chruby_rubies}/${version}"
 
   if $ensure == 'absent' {
     file { $dest:
@@ -36,14 +36,13 @@ define ruby::version(
   } else {
     $default_env = {
       'CC'         => '/usr/bin/cc',
-      'RBENV_ROOT' => $ruby::rbenv_root
     }
 
     $final_env = merge(merge($default_env, $os_env), $env)
 
-    exec { "ruby-install-${version}":
-      command     => "${ruby::rbenv_root}/bin/rbenv install ${version}",
-      cwd         => "${ruby::rbenv_root}/versions",
+    exec { "ruby-build-${version}":
+      command     => "${ruby::chruby_root}/ruby-build/bin/ruby-build ${version} ${dest}",
+      cwd         => $ruby::chruby_rubies,
       provider    => 'shell',
       timeout     => 0,
       creates     => $dest,
@@ -56,7 +55,7 @@ define ruby::version(
       version => '~> 1.0'
     }
 
-    Exec["ruby-install-${version}"] {
+    Exec["ruby-build-${version}"] {
       environment +> sort(join_keys_to_values($final_env, '='))
     }
   }
