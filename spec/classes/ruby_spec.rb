@@ -19,7 +19,6 @@ describe 'ruby' do
   it do
     should include_class("ruby::params")
 
-    #should contain_repository('/test/boxen/rbenv').with_ensure('v0.4.0')
     should contain_file('/test/boxen/chruby').with_ensure('directory')
     should contain_file('/test/boxen/chruby/rubies').with_ensure('directory')
 
