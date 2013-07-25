@@ -8,11 +8,11 @@ define ruby::definition($source = undef) {
   include ruby
 
   $source_path = $source ? {
-    undef   => "puppet:///modules/ruby/definitions/${name}",
+    undef   => "puppet:///modules/chruby/definitions/${name}",
     default => $source
   }
 
-  file { "${ruby::rbenv_root}/plugins/ruby-build/share/ruby-build/${name}":
+  file { "${ruby::chruby_root}/ruby-build/share/ruby-build/${name}":
     source  => $source_path
   }
 }
