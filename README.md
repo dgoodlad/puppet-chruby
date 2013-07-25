@@ -1,6 +1,12 @@
-# Ruby Puppet Module for Boxen
+# (ch)Ruby Puppet Module for Boxen
 
-[![Build Status](https://travis-ci.org/boxen/puppet-ruby.png)](https://travis-ci.org/boxen/puppet-ruby)
+This is an experimental fork of https://github.com/boxen/puppet-ruby which
+replaces rbenv with chruby. @charliesome this is for you buddy.
+
+Don't use this yet, it's not ready. Everything below this line is probably a
+lie.
+
+---
 
 Requires the following boxen modules:
 
