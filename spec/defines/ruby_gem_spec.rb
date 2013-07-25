@@ -15,11 +15,12 @@ describe 'ruby::gem' do
   it do
     should include_class('ruby')
 
-    should contain_rbenv_gem('bundler for 1.9.3-p194').with({
-      :gem           => 'bundler',
-      :version       => '~> 1.2.0',
-      :rbenv_root    => '/test/boxen/rbenv',
-      :rbenv_version => '1.9.3-p194'
+    should contain_chruby_gem('bundler for 1.9.3-p194').with({
+      :gem            => 'bundler',
+      :version        => '~> 1.2.0',
+      :chruby_root    => '/test/boxen/chruby',
+      :chruby_rubies  => '/test/boxen/chruby/rubies',
+      :chruby_version => '1.9.3-p194'
     })
   end
 end

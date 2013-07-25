@@ -1,4 +1,4 @@
-Puppet::Type.newtype(:rbenv_gem) do
+Puppet::Type.newtype(:chruby_gem) do
   @doc = ""
 
   ensurable do
@@ -20,17 +20,20 @@ Puppet::Type.newtype(:rbenv_gem) do
   newparam(:gem) do
   end
 
-  newparam(:rbenv_version) do
+  newparam(:chruby_version) do
   end
 
   newparam(:version) do
     defaultto '>= 0'
   end
 
-  newparam(:rbenv_root) do
+  newparam(:chruby_root) do
+  end
+
+  newparam(:chruby_rubies) do
   end
 
   autorequire(:exec) do
-    "ruby-install-#{self[:rbenv_version]}"
+    "ruby-build-#{self[:rbenv_version]}"
   end
 end
