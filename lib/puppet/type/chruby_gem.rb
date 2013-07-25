@@ -34,6 +34,6 @@ Puppet::Type.newtype(:chruby_gem) do
   end
 
   autorequire(:exec) do
-    "ruby-build-#{self[:rbenv_version]}"
+    "ruby-build-#{self[:chruby_version]}"
   end
 end
