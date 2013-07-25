@@ -20,6 +20,8 @@ class ruby::params {
 
   $default_gems = ['bundler ~>1.3']
 
+  $rubybuild_version = 'v20130628'
+
   #$rbenv_plugins = {
   #  'ruby-build' => {
   #    'ensure' => 'v20130628',

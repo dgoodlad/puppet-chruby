@@ -3,11 +3,12 @@
 # This module installs a full rbenv-driven ruby stack
 #
 class ruby(
-  $default_gems   = $ruby::params::default_gems,
-  $chruby_version = $ruby::params::chruby_version,
-  $chruby_root    = $ruby::params::chruby_root,
-  $chruby_rubies  = $ruby::params::chruby_rubies,
-  $user           = $ruby::params::user
+  $default_gems      = $ruby::params::default_gems,
+  $chruby_version    = $ruby::params::chruby_version,
+  $chruby_root       = $ruby::params::chruby_root,
+  $chruby_rubies     = $ruby::params::chruby_rubies,
+  $rubybuild_version = $ruby::params::rubybuild_version,
+  $user              = $ruby::params::user
 ) inherits ruby::params {
 
   if $::osfamily == 'Darwin' {
@@ -38,6 +39,13 @@ class ruby(
   file { $chruby_rubies:
     ensure => directory,
     user   => $user
+  }
+
+  repository { "${chruby_root}/ruby-build":
+    source => 'sstephenson/ruby-build',
+    ensure => $rubybuild_version,
+    user   => $user,
+    require => File[$chruby_root],
   }
 
   # TODO inject ruby-build into this chain
