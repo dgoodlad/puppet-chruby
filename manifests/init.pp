@@ -3,59 +3,46 @@
 # This module installs a full rbenv-driven ruby stack
 #
 class ruby(
-  $default_gems  = $ruby::params::default_gems,
-  $rbenv_plugins = {},
-  $rbenv_version = $ruby::params::rbenv_version,
-  $rbenv_root    = $ruby::params::rbenv_root,
-  $user          = $ruby::params::user
+  $default_gems   = $ruby::params::default_gems,
+  $chruby_version = $ruby::params::chruby_version,
+  $chruby_root    = $ruby::params::chruby_root,
+  $chruby_rubies  = $ruby::params::chruby_rubies,
+  $user           = $ruby::params::user
 ) inherits ruby::params {
 
   if $::osfamily == 'Darwin' {
     include boxen::config
 
-    file { "${boxen::config::envdir}/rbenv.sh":
-      source => 'puppet:///modules/ruby/rbenv.sh' ;
+    file { "${boxen::config::envdir}/chruby.sh":
+      source => 'puppet:///modules/ruby/chruby.sh' ;
     }
   }
 
-  repository { $rbenv_root:
-    ensure => $rbenv_version,
-    source => 'sstephenson/rbenv',
+  file { $chruby_root:
+    ensure => 'directory',
+    owner  => $user,
+  }
+
+  $source_url = "https://github.com/postmodern/chruby/archive/v${version}.tar.gz"
+
+  exec { "install chruby ${chruby_version}":
+    command     => "curl -L ${source_url} | tar zx && (cd chruby-${version} && make install)"
+    cwd         => $tmpdir,
+    environment => {
+      'PREFIX' => $chruby_root,
+    }
+    creates => "${chruby_root}/doc/chruby-${version}",
+    require => File[$chruby_root],
+  }
+
+  file { $chruby_rubies:
+    ensure => directory,
     user   => $user
   }
 
-  file {
-    [
-      "${rbenv_root}/plugins",
-      "${rbenv_root}/rbenv.d",
-      "${rbenv_root}/rbenv.d/install",
-      "${rbenv_root}/shims",
-      "${rbenv_root}/versions",
-    ]:
-      ensure  => directory,
-      require => Repository[$rbenv_root];
-
-    "${rbenv_root}/rbenv.d/install/00_try_to_download_ruby_version.bash":
-      mode   => '0755',
-      source => 'puppet:///modules/ruby/try_to_download_ruby_version.bash';
-  }
-
-  $_real_rbenv_plugins = merge($ruby::params::rbenv_plugins, $rbenv_plugins)
-  create_resources('ruby::plugin', $_real_rbenv_plugins)
-
-
-  if has_key($_real_rbenv_plugins, 'rbenv-default-gems') {
-    $gem_list = join($default_gems, "\n")
-
-    file { "${rbenv_root}/default-gems":
-      content => "${gem_list}\n",
-      tag     => 'ruby_plugin_config'
-    }
-  }
-
-  Repository[$rbenv_root] ->
-    File <| tag == 'ruby_plugin_config' |> ->
-    Ruby::Plugin <| |> ->
+  # TODO inject ruby-build into this chain
+  Exec["install chruby ${chruby_version}"] ->
+    File[$chruby_rubies] ->
     Ruby::Definition <| |> ->
     Ruby::Version <| |>
 }
