@@ -1,6 +1,6 @@
 # Class: ruby
 #
-# This module installs a full rbenv-driven ruby stack
+# This module installs a full chruby-driven ruby stack
 #
 class ruby(
   $default_gems      = $ruby::params::default_gems,
@@ -15,7 +15,7 @@ class ruby(
     include boxen::config
 
     file { "${boxen::config::envdir}/chruby.sh":
-      source => 'puppet:///modules/ruby/chruby.sh' ;
+      source => 'puppet:///modules/chruby/chruby.sh' ;
     }
   }
 
@@ -24,21 +24,22 @@ class ruby(
     owner  => $user,
   }
 
-  $source_url = "https://github.com/postmodern/chruby/archive/v${version}.tar.gz"
+  $source_url = "https://github.com/postmodern/chruby/archive/v${chruby_version}.tar.gz"
 
   exec { "install chruby ${chruby_version}":
-    command     => "curl -L ${source_url} | tar zx && (cd chruby-${version} && make install)"
-    cwd         => $tmpdir,
+    command     => "curl -L ${source_url} | tar zx && (cd chruby-${chruby_version} && make install)",
+    cwd         => '/tmp',
     environment => {
       'PREFIX' => $chruby_root,
-    }
-    creates => "${chruby_root}/doc/chruby-${version}",
-    require => File[$chruby_root],
+    },
+    logoutput   => 'on_failure',
+    creates     => "${chruby_root}/doc/chruby-${version}",
+    require     => File[$chruby_root],
   }
 
   file { $chruby_rubies:
     ensure => directory,
-    user   => $user
+    owner  => $user,
   }
 
   repository { "${chruby_root}/ruby-build":
