@@ -15,7 +15,7 @@ class ruby(
     include boxen::config
 
     file { "${boxen::config::envdir}/chruby.sh":
-      source => 'puppet:///modules/chruby/chruby.sh' ;
+      source => 'puppet:///modules/ruby/chruby.sh' ;
     }
   }
 

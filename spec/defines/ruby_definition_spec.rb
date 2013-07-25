@@ -33,7 +33,7 @@ describe 'ruby::definition' do
     should include_class('ruby')
 
     should contain_file(definition_path).with({
-      :source  => "puppet:///modules/chruby/definitions/#{title}"
+      :source  => "puppet:///modules/ruby/definitions/#{title}"
     })
   end
 end

@@ -8,7 +8,7 @@ define ruby::definition($source = undef) {
   include ruby
 
   $source_path = $source ? {
-    undef   => "puppet:///modules/chruby/definitions/${name}",
+    undef   => "puppet:///modules/ruby/definitions/${name}",
     default => $source
   }
 

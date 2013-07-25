@@ -34,7 +34,7 @@ describe 'ruby' do
     should include_class("boxen::config")
 
     should contain_file('/test/boxen/env.d/chruby.sh').
-      with_source('puppet:///modules/chruby/chruby.sh')
+      with_source('puppet:///modules/ruby/chruby.sh')
   end
 
   context "not darwin" do
