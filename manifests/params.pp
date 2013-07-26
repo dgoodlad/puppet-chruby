@@ -23,19 +23,4 @@ class ruby::params {
   $default_gems = ['bundler ~>1.3']
 
   $rubybuild_version = 'v20130628'
-
-  #$rbenv_plugins = {
-  #  'ruby-build' => {
-  #    'ensure' => 'v20130628',
-  #    'source' => 'sstephenson/ruby-build'
-  #  },
-  #  'rbenv-gem-rehash' => {
-  #    'ensure' => 'v1.0.0',
-  #    'source' => 'sstephenson/rbenv-gem-rehash'
-  #  },
-  #  'rbenv-default-gems' => {
-  #    'ensure' => 'v1.0.0',
-  #    'source' => 'sstephenson/rbenv-default-gems'
-  #  }
-  #}
 }
