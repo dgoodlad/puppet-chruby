@@ -1,4 +1,4 @@
-# Installs a ruby version via rbenv.
+# Installs a ruby version via ruby-build.
 # Takes ensure, env, and version params.
 #
 # Usage:

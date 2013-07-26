@@ -7,10 +7,10 @@ describe "ruby::ree" do
     should include_class("ruby")
     should include_class("ruby::ree_1_8_7_2012_02")
 
-    should contain_file("/test/boxen/rbenv/versions/ree").with({
+    should contain_file("/test/boxen/chruby/opt/rubies/ree").with({
       :ensure => "symlink",
       :force  => true,
-      :target => "/test/boxen/rbenv/versions/ree-1.8.7-2012.02"
+      :target => "/test/boxen/chruby/opt/rubies/ree-1.8.7-2012.02"
     })
   end
 end

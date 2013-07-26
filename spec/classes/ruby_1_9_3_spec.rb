@@ -15,10 +15,10 @@ describe 'ruby::1_9_3' do
     should_not include_class('ruby::1_9_3_p385')
     should_not include_class('ruby::1_9_3_p392')
 
-    should contain_file('/test/boxen/rbenv/versions/1.9.3').with({
+    should contain_file('/test/boxen/chruby/opt/rubies/1.9.3').with({
       :ensure => 'symlink',
       :force  => true,
-      :target => '/test/boxen/rbenv/versions/1.9.3-p448'
+      :target => '/test/boxen/chruby/opt/rubies/1.9.3-p448'
     })
   end
 end
