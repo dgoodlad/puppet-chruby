@@ -6,24 +6,22 @@ Puppet::Type.type(:chruby_gem).provide(:rubygems) do
 
   def path
     [
-      "#{@resource[:chruby_root]}/bin",
       "#{Facter[:boxen_home].value}/homebrew/bin",
       "$PATH"
     ].join(':')
   end
 
   def chruby_gem(command)
-    chruby_command = [
-    ].join(" && ")
-
     full_command = [
       "sudo -u #{Facter[:boxen_user].value}",
       "PATH=#{path}",
-      "RUBIES=#{@resource[:chruby_rubies]}",
-      "chruby-exec #{@resource[:chruby_version]} -- gem #{command}"
+      "PREFIX=#{@resource[:chruby_root]}",
+      "#{@resource[:chruby_root]}/bin/chruby-exec",
+      "#{@resource[:chruby_version]} -- \"gem #{command}\"",
     ].join(" ")
 
     output = `#{full_command}`
+
     [output, $?]
   end
 

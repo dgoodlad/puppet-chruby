@@ -5,7 +5,9 @@ class ruby::params {
       include boxen::config
 
       $chruby_root   = "${boxen::config::home}/chruby"
-      $chruby_rubies = "${chruby_root}/rubies"
+      # If you change this you're going to have a bad time, because chruby sets
+      # $RUBIES by default to include all the directories in $PREFIX/opt/rubies
+      $chruby_rubies = "${chruby_root}/opt/rubies"
       $user          = $::boxen_user
     }
 
