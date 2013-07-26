@@ -1,4 +1,4 @@
-# Public: specify the global ruby version as per rbenv
+# Public: specify the global ruby version
 #
 # Usage:
 #
@@ -12,10 +12,10 @@ class ruby::global($version = '1.9.3') {
     require $klass
   }
 
-  file { "${ruby::rbenv_root}/version":
+  file { "${::boxen::config::envdir}/chruby-global.sh":
     ensure  => present,
     owner   => $ruby::user,
     mode    => '0644',
-    content => "${version}\n",
+    content => "chruby ${version}\n",
   }
 }
