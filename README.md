@@ -1,12 +1,15 @@
 # (ch)Ruby Puppet Module for Boxen
 
 This is an experimental fork of https://github.com/boxen/puppet-ruby which
-replaces rbenv with chruby. @charliesome this is for you buddy.
+replaces rbenv with chruby. It should be a drop-in replacement, with support
+for most of the types and classes provided in upstream puppet-ruby.
 
-Don't use this yet, it's not ready. Everything below this line is probably a
-lie.
+To use it in your boxen, replace the normal ruby module with this one:
 
----
+```ruby
+# Puppetfile
+github 'ruby', '0.1.0', :repo => 'dgoodlad/puppet-chruby'
+```
 
 Requires the following boxen modules:
 
@@ -42,12 +45,6 @@ ruby::version { '1.9.3-p194': }
 
 # we provide a ton of predefined ones for you though
 require ruby::1_9_3_p194
-
-# Installing rbenv plugin
-ruby::plugin { 'rbenv-vars':
-  ensure => 'v1.2.0',
-  source  => 'sstephenson/rbenv-vars'
-}
 ```
 
 ## Hiera configuration
@@ -56,17 +53,12 @@ The following variables may be automatically overridden with Hiera:
 
 ``` yaml
 ---
-"ruby::default_gems":
-  - "bundler ~>1.3"
-  - "pry"
-"ruby::rbenv_plugins":
-  "rbenv-gem-rehash":
-    "ensure": "v1.0.0"
-    "source": "sstephenson/rbenv-gem-rehash"
+"ruby::chruby_version": "0.3.6"
 
-"ruby::rbenv_version": "v0.4.0"
+"ruby::rubybuild_version": "v20130628"
 
-"ruby::rbenv_root": "/home/deploy/rbenv"
+# Careful with these, totally untested
+"ruby::chruby_root": "/home/deploy/chruby"
 
 "ruby::user": "deploy"
 ```
