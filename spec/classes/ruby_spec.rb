@@ -24,7 +24,7 @@ describe 'ruby' do
 
     should contain_exec('install chruby 0.3.6').with({
       'command' => 'curl -L https://github.com/postmodern/chruby/archive/v0.3.6.tar.gz | tar zx && (cd chruby-0.3.6 && make install)',
-      'environment' => { 'PREFIX' => '/test/boxen/chruby' },
+      'environment' => 'PREFIX=/test/boxen/chruby',
       'cwd' => '/tmp'
     })
 
