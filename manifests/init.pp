@@ -29,11 +29,11 @@ class ruby(
   exec { "install chruby ${chruby_version}":
     command     => "curl -L ${source_url} | tar zx && (cd chruby-${chruby_version} && make install)",
     cwd         => '/tmp',
-    environment => {
-      'PREFIX' => $chruby_root,
-    },
+    environment => [
+      "PREFIX=${chruby_root}",
+    ],
     logoutput   => 'on_failure',
-    creates     => "${chruby_root}/doc/chruby-${version}",
+    creates     => "${chruby_root}/share/doc/chruby-${chruby_version}",
     require     => File[$chruby_root],
   }
 
