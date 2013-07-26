@@ -19,7 +19,7 @@ describe 'ruby::gem' do
       :gem            => 'bundler',
       :version        => '~> 1.2.0',
       :chruby_root    => '/test/boxen/chruby',
-      :chruby_rubies  => '/test/boxen/chruby/rubies',
+      :chruby_rubies  => '/test/boxen/chruby/opt/rubies',
       :chruby_version => '1.9.3-p194'
     })
   end

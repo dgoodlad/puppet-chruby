@@ -10,11 +10,11 @@ describe 'ruby::version' do
         should include_class('ruby')
 
         should contain_exec('ruby-build-1.9.3-p194').with({
-          :command  => "/test/boxen/chruby/ruby-build/bin/ruby-build 1.9.3-p194 /test/boxen/chruby/rubies/1.9.3-p194",
-          :cwd      => '/test/boxen/chruby/rubies',
+          :command  => "/test/boxen/chruby/ruby-build/bin/ruby-build 1.9.3-p194 /test/boxen/chruby/opt/rubies/1.9.3-p194",
+          :cwd      => '/test/boxen/chruby/opt/rubies',
           :provider => 'shell',
           :timeout  => 0,
-          :creates  => '/test/boxen/chruby/rubies/1.9.3-p194'
+          :creates  => '/test/boxen/chruby/opt/rubies/1.9.3-p194'
         })
       end
     end
@@ -51,7 +51,7 @@ describe 'ruby::version' do
     end
 
     it do
-      should contain_file('/test/boxen/chruby/rubies/1.9.3-p194').with({
+      should contain_file('/test/boxen/chruby/opt/rubies/1.9.3-p194').with({
         :ensure => 'absent',
         :force  => true
       })
