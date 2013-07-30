@@ -24,6 +24,20 @@ class ruby(
     owner  => $user,
   }
 
+  exec { "create rubies directory":
+    # puppet does not create directories recursively when ensuring existence
+    # with a 'file' resource, so we need to shell out to mkdir -p instead
+    command => "mkdir -p $chruby_rubies",
+    creates => $chruby_rubies,
+  }
+
+  file { $chruby_rubies:
+    ensure => 'directory',
+    owner  => $user,
+  }
+
+  Exec["create rubies directory"] -> File[$chruby_rubies]
+
   $source_url = "https://github.com/postmodern/chruby/archive/v${chruby_version}.tar.gz"
 
   exec { "install chruby ${chruby_version}":
@@ -35,11 +49,6 @@ class ruby(
     logoutput   => 'on_failure',
     creates     => "${chruby_root}/share/doc/chruby-${chruby_version}",
     require     => File[$chruby_root],
-  }
-
-  file { $chruby_rubies:
-    ensure => directory,
-    owner  => $user,
   }
 
   repository { "${chruby_root}/ruby-build":
