@@ -12,7 +12,7 @@ class ruby::global($version = '1.9.3') {
     require $klass
   }
 
-  file { "${::boxen::config::envdir}/chruby-global.sh":
+  file { "${::ruby::params::chruby_root}/chruby-global.sh":
     ensure  => present,
     owner   => $ruby::user,
     mode    => '0644',
