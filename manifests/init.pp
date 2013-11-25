@@ -27,7 +27,7 @@ class ruby(
   exec { 'create rubies directory':
     # puppet does not create directories recursively when ensuring existence
     # with a 'file' resource, so we need to shell out to mkdir -p instead
-    command => "mkdir -p $chruby_rubies",
+    command => "mkdir -p ${chruby_rubies}",
     creates => $chruby_rubies,
   }
 
