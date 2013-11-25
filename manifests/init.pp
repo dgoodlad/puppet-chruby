@@ -52,9 +52,9 @@ class ruby(
   }
 
   repository { "${chruby_root}/ruby-build":
-    source => 'sstephenson/ruby-build',
-    ensure => $rubybuild_version,
-    user   => $user,
+    ensure  => $rubybuild_version,
+    source  => 'sstephenson/ruby-build',
+    user    => $user,
     require => File[$chruby_root],
   }
 
