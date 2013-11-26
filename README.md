@@ -1,6 +1,8 @@
 # (ch)Ruby Puppet Module for Boxen
 
-This is an experimental fork of https://github.com/boxen/puppet-ruby which
+*Please Note*: I am not actively using this module, as it was written purely as a proof-of-concept.
+
+This is an *experimental* fork of https://github.com/boxen/puppet-ruby which
 replaces rbenv with chruby. It should be a drop-in replacement, with support
 for most of the types and classes provided in upstream puppet-ruby.
 
